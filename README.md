@@ -42,7 +42,7 @@ conda activate etpr1
 
 ## Training and evaluation
 
-Run commands from the overlaid ETP-R1 working directory. The launchers use **one GPU** with eight R2R or six RxR environments for training/evaluation. Use `main.bash` below; the baseline's `main_server.bash` is not the ST2Nav launcher.
+Simulation training uses **two NVIDIA GeForce RTX 4090 GPUs**. Run commands from the overlaid ETP-R1 working directory using `main.bash`. The training launchers start two distributed processes, one per GPU, with eight R2R or six RxR environments per GPU (16 or 12 in total). Evaluation and inference use one GPU.
 
 Before running, edit `run_r2r/iter_train.yaml` or `run_rxr/iter_train.yaml`:
 
@@ -52,11 +52,11 @@ Before running, edit `run_r2r/iter_train.yaml` or `run_rxr/iter_train.yaml`:
 
 ```bash
 # R2R online SFT and evaluation
-CUDA_VISIBLE_DEVICES=0 bash run_r2r/main.bash train 2333
+CUDA_VISIBLE_DEVICES=0,1 bash run_r2r/main.bash train 2333
 CUDA_VISIBLE_DEVICES=0 bash run_r2r/main.bash eval 2333 /path/to/st2nav-r2r.pth
 
 # RxR online SFT and evaluation
-CUDA_VISIBLE_DEVICES=0 bash run_rxr/main.bash train 2334
+CUDA_VISIBLE_DEVICES=0,1 bash run_rxr/main.bash train 2334
 CUDA_VISIBLE_DEVICES=0 bash run_rxr/main.bash eval 2334 /path/to/st2nav-rxr.pth
 
 # Optional test predictions, after configuring INFERENCE paths
