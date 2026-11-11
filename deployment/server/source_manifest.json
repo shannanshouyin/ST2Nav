@@ -1,0 +1,30 @@
+{
+  "files": {
+    "vendor/ST2Nav/LICENSE": "6b0b891f943448eb977f9156938029adc7d40566128d674e3a796ed2ad6b64b1",
+    "vendor/ST2Nav/bert_config/xlm-roberta-base/config.json": "d66ed8cd4f2a93b358c245e50736fa389ed4f35c0bae7aad0b32abb20c62b579",
+    "vendor/ST2Nav/bert_config/xlm-roberta-base/sentencepiece.bpe.model": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865",
+    "vendor/ST2Nav/bert_config/xlm-roberta-base/tokenizer.json": "a898ea75433890f6610f4e470b8ebeb0c21dce5c8dd61f892eb09eb5919d2e2c",
+    "vendor/ST2Nav/licenses/Apache-2.0.txt": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "vendor/ST2Nav/licenses/ETPNav-MIT.txt": "1cbe97e9125770b6ad793615dee6d5c5f7642c2851a59b436addacc88180683d",
+    "vendor/ST2Nav/licenses/Third-Party-MIT.txt": "44283946a2fcd992d30426af46644b8e28a34515ae7b3af086648ad0bcc3c90a",
+    "vendor/ST2Nav/vlnce_baselines/common/ops.py": "50a09535ea90757adb902979a1583f921c6f249eeeb61b4c0c7114c840aac787",
+    "vendor/ST2Nav/vlnce_baselines/common/transformer.py": "cb128fb8b505fff29b9d4b1f09f7b9383020db49e3e9ee933506a42fd4848cca",
+    "vendor/ST2Nav/vlnce_baselines/models/R1Policy.py": "e7f87b00dc94db486e078eb1b0ca87b84f5bb409df2063ef21164f8b49e328b7",
+    "vendor/ST2Nav/vlnce_baselines/models/etp/ETP_R1_vilmodel_cmt.py": "1d6fe597f81b7d0dddb0b5cd71a2b1246e5a732742923807f79593f3a6b8d6f4",
+    "vendor/ST2Nav/vlnce_baselines/models/etp/dpft_temporal.py": "f9d3732fb956be739b24c149863c54f603330ed880af4a6518218e3b72893465",
+    "vendor/ST2Nav/vlnce_baselines/models/etp/stgasa.py": "eb6936d1d7bf12dfaf2b99ecd750c03367b1dee706896c45afc15b541b8f7d5d",
+    "vendor/ST2Nav/vlnce_baselines/models/graph_utils.py": "776a6cdbbd7f41651eba10a2373dc5edb1e3967ace335d60a4582252d1b3e0bb",
+    "vendor/ST2Nav/vlnce_baselines/ss_trainer_ETP_R1.py": "99065d4c5fa642befa471512071ed6682647e1ceeb5b780f0821d0d5df39a100",
+    "vendor/ST2Nav/vlnce_baselines/waypoint_pred/TRM_net.py": "568536be89404cf9bc305d454f264fba6192ef938dcfae22dbddf6f3e37de627",
+    "vendor/ST2Nav/vlnce_baselines/waypoint_pred/transformer/pytorch_transformer/file_utils.py": "26988bf80a0b3059ec76dd032344c3bbdcf917a2df9e2393a8159f750a2a052f",
+    "vendor/ST2Nav/vlnce_baselines/waypoint_pred/transformer/pytorch_transformer/modeling_bert.py": "ac6e799669e66e7d955147b8d79688b71a8672cdff526e1811b277f789688fc5",
+    "vendor/ST2Nav/vlnce_baselines/waypoint_pred/transformer/pytorch_transformer/modeling_utils.py": "2d2a9cf6672de6a3347e2ea04522d39b5075b18d51d044891c8e98c4e3677863",
+    "vendor/ST2Nav/vlnce_baselines/waypoint_pred/transformer/waypoint_bert.py": "c5f88dae3d4bf169c97c0cbb8696f26783ce71342767cca5567d883b0ceeb3e3",
+    "vendor/ST2Nav/vlnce_baselines/waypoint_pred/utils.py": "008070155e0eba889dcfda0f4762d9aea6ddeaaec508764d245cbe15d0666e9c",
+    "vendor/habitat-lab/LICENSE": "f08a94bfb0bdc1d7f1cb59badaf0f8c551b10db871185622dbf1fd036affa9cb",
+    "vendor/habitat-lab/habitat/tasks/utils.py": "aaf0dc441ed366b63ac4535f475b0996ea05fe4e570f4e85d07af64d5014dc24",
+    "vendor/habitat-lab/habitat/utils/geometry_utils.py": "3ee8d6ed5911fd0af5b8e5d39783836a6514501484a3231d9de93a09637da8c1",
+    "vendor/habitat-lab/habitat_baselines/rl/ddppo/policy/resnet.py": "499f4a5a24265660fae1fe1463798408aef1648210131e797365f364dcea75de",
+    "vendor/habitat-lab/habitat_baselines/rl/ddppo/policy/resnet_policy.py": "fd361f5a32f1bbffcbc324fdc851dcd88a3ddbe14a701e3bbb31ad5a8b0c26f7"
+  }
+}

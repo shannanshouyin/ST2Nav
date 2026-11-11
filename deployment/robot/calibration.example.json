@@ -1,0 +1,36 @@
+{
+  "schema": "g1_dual_camera_static_calibration_v1",
+  "status": "UNCONFIGURED",
+  "cameras": [
+    {
+      "serial": "UPPER_CAMERA_SERIAL",
+      "profile": {
+        "width": 1280,
+        "height": 720,
+        "fps": 6
+      },
+      "intrinsics": null,
+      "distortion_coefficients": null,
+      "T_pelvis_from_color_at_capture_waist": null
+    },
+    {
+      "serial": "LOWER_CAMERA_SERIAL",
+      "profile": {
+        "width": 1280,
+        "height": 720,
+        "fps": 6
+      },
+      "intrinsics": null,
+      "distortion_coefficients": null,
+      "T_pelvis_from_color_at_capture_waist": null
+    }
+  ],
+  "body_reference": {
+    "capture_states": [
+      {
+        "waist_q_rad": null
+      }
+    ]
+  },
+  "note": "Template only. Replace with independently verified installation calibration. Never mark these empty fields as passed."
+}

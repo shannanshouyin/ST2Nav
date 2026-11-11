@@ -1,0 +1,29 @@
+{
+  "interface": "YOUR_ROBOT_NETWORK_INTERFACE",
+  "model_url": "https://inference.example:18766",
+  "default_model": "st2nav",
+  "observation": "dual_24_rgbd_to_12_90deg",
+  "navigation_ready": false,
+  "supervised_camera_experiment": {
+    "training_camera_match": false,
+    "human_clearance_required": true,
+    "fresh_clearance_uses_measured_depth_only": true,
+    "missing_range_completion": "measured_or_estimated_no_sentinel"
+  },
+  "camera": {
+    "model": "Intel RealSense D435i",
+    "serial_number": "UPPER_CAMERA_SERIAL",
+    "camera_to_base_calibration": "UNCONFIRMED",
+    "dual_camera_calibration": "dual-camera-static-calibration.json",
+    "dual_serial_numbers": [
+      "UPPER_CAMERA_SERIAL",
+      "LOWER_CAMERA_SERIAL"
+    ],
+    "dual_capture_profile": {
+      "width": 1280,
+      "height": 720,
+      "fps": 6,
+      "physical_portrait": true
+    }
+  }
+}

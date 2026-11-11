@@ -1,0 +1,36 @@
+# Generated Python/build files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+# Local experiment assets and outputs
+/data/
+/pretrained/
+/simulation/data/
+/simulation/pretrained/
+*.pt
+*.pth
+*.ckpt
+*.npz
+*.log
+logs/
+navigation_results/
+# Private robot/server configuration
+/deployment/robot/config.json
+/deployment/robot/calibration.json
+*.key
+*.crt
+*.pem
+token
+# Editor/OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

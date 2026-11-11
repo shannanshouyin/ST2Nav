@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.venv*/
+*.pth
+*.pt
+*.ckpt
+*.npz
+*.log
+*.key
+*.crt
+token
+/config.json
+dual-camera-static-calibration.json
+cache/
+outputs/

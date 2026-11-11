@@ -1,0 +1,159 @@
+EXP_NAME: release_rxr_stgasa_mtr
+BASE_TASK_CONFIG_PATH: run_rxr/rxr_vlnce.yaml
+SIMULATOR_GPU_IDS: [0]
+TORCH_GPU_ID: 0
+TORCH_GPU_IDS: [0]
+TRAINER_NAME: SS-ETP-R1
+ENV_NAME: R1Env
+GPU_NUMBERS: 1
+NUM_ENVIRONMENTS: 6  # 与main.bash现有单卡资源覆盖一致。
+TENSORBOARD_DIR: data/logs/tensorboard_dirs/
+CHECKPOINT_FOLDER: data/logs/checkpoints/
+RESULTS_DIR: data/logs/checkpoints/
+# VIDEO_DIR: data/logs/video/
+# VIDEO_OPTION: ["disk"]
+# 保存视频分辨率控制，只影响VIDEO_OPTION=["disk"]时写出的视频/可视化帧，不影响模型输入传感器。
+VIDEO_RESOLUTION:
+  enabled: False
+  # width/height都为0时按scale缩放；只填一个维度时按原始比例自动计算另一个。
+  width: 0
+  height: 0
+  scale: 1.0
+# 右侧top-down/topological map的原始栅格分辨率；512为原默认值，建议可试1024/2048/4096。
+VIDEO_TOPO_MAP_RESOLUTION: 512
+# VIDEO_OPTION开启时，在top-down map中用紫红色持续显示教师轨迹。
+VIDEO_DRAW_TEACHER_PATH: False
+ONLY_LAST_SAVEALL: True
+
+INFERENCE:
+  SPLIT: test_challenge
+  LANGUAGES: ['*']
+  USE_CKPT_CONFIG: False
+  CKPT_PATH: ''  # Local checkpoint path
+  PREDICTIONS_FILE: ''
+  FORMAT: rxr
+  EPISODE_COUNT: -1
+
+EVAL:
+  USE_CKPT_CONFIG: False
+  SPLIT: val_unseen
+  # LANGUAGES: [en-US, en-IN]
+  LANGUAGES: ['*']
+  EPISODE_COUNT: -1
+  EPISODE_ID: None
+  # EPISODE_COUNT: 10
+  CKPT_PATH_DIR: 'data/logs/checkpoints/release_rxr_stgasa_mtr/'
+  fast_eval: False
+  ZERO_SHOT_PRETRAIN: False
+
+
+IL:
+  # 从预训练开始RxR SFT：ST-GASA + birth/observation MTR + RP-DAgger。
+  # 保留RxR训练周期及长轨迹/长指令设置，不复制R2R的短程后训练配置。
+  iters: 2000
+  log_every: 100
+  checkpoint_every: 100
+  lr: 5e-6
+  batch_size: 1 # equal to NUM_ENVIRONMENTS
+  ml_weight: 1.0
+  expert_policy: ndtw
+  expert_stop_distance: 1.5
+  # 仅SFT训练损失；独立于ST-GASA、DPFT时间模块和MTR，不改教师采样或推理。
+  RP_DAGGER:
+    enabled: False
+    lambda_reg: 0.1  # CE + lambda_reg * ghost条件期望代价；MTR损失另行保留。
+    tau: 3.0  # 米；RxR使用到当前交互式教师subgoal的距离差。STOP只用原CE。
+  st_gasa_lr: 5e-6
+  sap_lr: 5e-6
+  mtr_lr: 5e-6
+  use_online_mtr: True  # 仅训练；评测是否预测由MODEL.MTR.eval_predict控制。
+  # 固定遮蔽有效无序节点对的比例；仅替换关系矩阵位置，不清零节点特征。
+  mtr_mask_ratio: 0.15
+  mtr_loss_weight: 0.1
+  mtr_birth_loss_weight: 1.0
+  mtr_observation_loss_weight: 1.0
+  mtr_distance_loss_weight: 0.0  # 当前仅时间关系MTR，不训练空间恢复。
+  mtr_edge_loss_weight: 0.0
+  # 显式控制DAgger可训练模块；RGB/Depth编码器和航点预测器始终冻结。
+  TRAINABLE:
+    # 恢复原版ETP-R1式完整VLN-BERT微调；仅RGB/Depth backbone和Waypoint Predictor冻结。
+    language_embeddings: True
+    language_encoder: True
+    # RGB/Depth特征投影、位置/导航类型编码和pano transformer；不包含冻结的视觉主干。
+    panorama_embeddings: True
+    # 图节点 step/position/task embedding。
+    global_map_embeddings: True
+    # global encoder中的图-文cross-modal规划层。
+    global_encoder_x_layers: True
+    # SAP打分前，让每个图节点从指令token中查询相关文本信息。
+    graph_query_text: True
+    # graph_query_text输出后的残差变换层。
+    graph_attentioned_txt: True
+    # 最终global SAP动作打分头。
+    global_sap_head: True
+    # ST-GASA固定时间关系参数。
+    stgasa: True
+    # Online MTR pair encoder及birth/observation分类头。
+    mtr: True
+
+  sample_ratio: 0.75
+  decay_interval: 5000
+  warmup_iters: 50
+  min_lr_ratio: 1.0
+
+  max_traj_len: 25
+  max_text_len: 250
+  loc_noise: 0.5
+  waypoint_aug: True
+  ghost_aug: 0.0
+  back_algo: teleport
+  tryout: True
+  # False: 加载MODEL.pretrained_path；True: 从RxR在线checkpoint继续微调。
+  load_from_ckpt: False
+  ckpt_to_load: 'data/logs/checkpoints/ckpt.iter24000.pth'  # 仅load_from_ckpt=True时填写，不自动加载R2R权重。
+  is_requeue: False
+  RECOLLECT_TRAINER:
+    gt_file: data/datasets/RxR_VLNCE_v0_enc_xlmr/{split}/{split}_{role}_gt.json.gz
+
+MODEL:
+  task_type: rxr
+
+  policy_name: R1Policy
+  NUM_ANGLES: 12
+  # 与有效R2R配置相同的ETP-R1预训练起点；服务器路径不同时修改此项。
+  pretrained_path: pretrained/r2r_rxr_ce/mlm.sap_habitat_depth/store2/model_step_367500.pt
+  fix_lang_embedding: False
+  fix_pano_embedding: False
+  use_depth_embedding: True
+  use_sprels: True
+  stgasa: True
+  STGASA:
+    # 当前固定ST-GASA只使用birth delta、last-observation delta和9类有向类型对。
+    # Instruction Gate、age、空间分桶已按最终方案移除；gamma在代码中固定零初始化。
+    relation_hidden_size: 128
+    time_max_bucket: 6
+    # 仅eval/inference覆盖每层每head的原始gamma；null保留checkpoint，0.0关闭时间偏置。
+    eval_gamma: null
+  mtr: True
+  MTR:
+    relation_hidden_size: 256
+    spatial_recovery: False  # 仅birth/observation关系恢复，不预测边或距离。
+    # 仅eval/inference：先预测选中关系，再运行一次ST-GASA/SAP，不计算MTR损失。
+    eval_predict: False
+    # 确定性选择有效无序关系对；空间恢复开启时也替换选中距离。
+    eval_mask_ratio: 0.15
+  merge_ghost: True
+  consume_ghost: True
+
+  spatial_output: False
+  RGB_ENCODER:
+    output_size: 512
+  DEPTH_ENCODER:
+    output_size: 256
+  VISUAL_DIM:
+    vis_hidden: 768
+    directional: 128
+  INSTRUCTION_ENCODER:
+    bidirectional: True
+    sensor_uuid: rxr_instruction
+    embedding_size: 768

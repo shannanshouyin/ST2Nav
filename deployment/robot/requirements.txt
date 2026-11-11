@@ -1,0 +1,4 @@
+numpy==1.26.4
+scipy==1.13.1
+opencv-python==4.11.0.86
+cyclonedds==0.10.2
